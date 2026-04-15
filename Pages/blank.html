@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Weight Lifting — Brady Copeland</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <link href="../css/styles.css" rel="stylesheet" />
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --charcoal: #141414;
+            --iron: #1e1e1e;
+            --steel: #2a2a2a;
+            --ash: #888;
+            --silver: #c0c0c0;
+            --white: #f5f5f0;
+            --gold: #c9a84c;
+            --gold-light: #e8c76a;
+            --red: #c0392b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--black);
+            color: var(--white);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.2rem 4rem;
+            background: rgba(10,10,10,0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(201,168,76,0.15);
+            transition: background 0.3s;
+        }
+        .navbar-brand {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            letter-spacing: 0.2em;
+            color: var(--gold);
+            text-decoration: none;
+        }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a {
+            color: var(--silver);
+            text-decoration: none;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 400;
+            transition: color 0.2s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* ── HERO ── */
+        #top {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0 4rem 6rem;
+            position: relative;
+            overflow: hidden;
+            background: var(--black);
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.7) 60%, rgba(10,10,10,1) 100%),
+                url('../assets/img/weight.jpg') center/cover no-repeat;
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 70% 40%, rgba(201,168,76,0.08) 0%, transparent 60%);
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 900px; }
+        .hero-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .hero-label::before {
+            content: '';
+            display: block;
+            width: 40px; height: 1px;
+            background: var(--gold);
+        }
+        h1.hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(5rem, 12vw, 10rem);
+            line-height: 0.9;
+            letter-spacing: 0.02em;
+            color: var(--white);
+            margin-bottom: 2rem;
+        }
+        h1.hero-title span { color: var(--gold); }
+        .hero-sub {
+            font-size: 1.1rem;
+            color: var(--ash);
+            max-width: 500px;
+            line-height: 1.7;
+            margin-bottom: 3rem;
+        }
+        .anchor-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .anchor-links a {
+            padding: 0.75rem 2rem;
+            border: 1px solid rgba(201,168,76,0.4);
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 400;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .anchor-links a::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gold);
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+            z-index: -1;
+        }
+        .anchor-links a:hover { color: var(--black); }
+        .anchor-links a:hover::before { transform: translateX(0); }
+
+        /* ── SCROLL INDICATOR ── */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem; right: 4rem;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--ash);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+        .scroll-line {
+            width: 1px; height: 60px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.2); }
+        }
+
+        /* ── SECTION BASE ── */
+        section {
+            padding: 8rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .section-eyebrow {
+            font-size: 0.7rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .section-eyebrow::before {
+            content: '';
+            display: block;
+            width: 30px; height: 1px;
+            background: var(--gold);
+        }
+        .section-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.1;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+        }
+        .section-title em {
+            font-style: italic;
+            color: var(--gold);
+        }
+
+        /* ── KEY POINTS ── */
+        #point1-section { border-top: 1px solid var(--steel); }
+        .points-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            margin-top: 4rem;
+            background: var(--steel);
+        }
+        .point-card {
+            background: var(--charcoal);
+            padding: 3rem;
+            transition: background 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 0;
+            background: var(--gold);
+            transition: height 0.4s ease;
+        }
+        .point-card:hover { background: var(--iron); }
+        .point-card:hover::before { height: 100%; }
+        .point-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5rem;
+            color: var(--steel);
+            line-height: 1;
+            margin-bottom: 1rem;
+            transition: color 0.3s;
+        }
+        .point-card:hover .point-number { color: rgba(201,168,76,0.2); }
+        .point-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.5rem;
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+        .point-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .point-list li {
+            color: var(--ash);
+            font-size: 0.9rem;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+        .point-list li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-size: 0.7rem;
+        }
+
+        /* ── IMAGE SECTION ── */
+        #gym-section {
+            border-top: 1px solid var(--steel);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+            max-width: 1400px;
+            padding: 8rem 4rem;
+            margin: 0 auto;
+        }
+        .gym-text p {
+            color: var(--ash);
+            line-height: 1.8;
+            font-size: 1rem;
+            margin-top: 1.5rem;
+        }
+        .gym-image-wrap {
+            position: relative;
+            border: 1px solid rgba(201,168,76,0.25);
+            padding: 0;
+        }
+        .gym-image-wrap img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(30%) contrast(1.1);
+            transition: filter 0.4s;
+        }
+        .gym-image-wrap:hover img { filter: grayscale(0%) contrast(1.05); }
+
+        /* ── VIDEO SECTION ── */
+        #video-section {
+            border-top: 1px solid var(--steel);
+            background: var(--charcoal);
+            padding: 8rem 4rem;
+            max-width: 100%;
+            margin: 0;
+        }
+        #video-section .inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        #video-section .inner .section-eyebrow,
+        #graph-section .section-eyebrow {
+            justify-content: center;
+        }
+        #video-section .inner p,
+        #graph-section > p {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .video-wrap {
+            margin-top: 4rem;
+            position: relative;
+            padding-bottom: 43%;
+            background: var(--black);
+            overflow: hidden;
+        }
+        .video-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border: 1px solid rgba(201,168,76,0.2);
+            z-index: 2;
+            pointer-events: none;
+        }
+        .video-wrap iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%; height: 100%;
+            border: none;
+        }
+
+        /* ── GRAPH SECTION ── */
+        #graph-section {
+            border-top: 1px solid var(--steel);
+            max-width: 1400px;
+            padding: 8rem 4rem;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .graph-wrap {
+            margin-top: 4rem;
+            background: var(--charcoal);
+            border: 1px solid var(--steel);
+            padding: 2rem;
+        }
+
+        /* ── QUOTE BANNER ── */
+        .quote-banner {
+            background: var(--gold);
+            padding: 5rem 4rem;
+            text-align: center;
+        }
+        .quote-banner blockquote {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            color: var(--black);
+            line-height: 1.2;
+            max-width: 900px;
+            margin: 0 auto 1rem;
+            font-style: italic;
+        }
+        .quote-banner cite {
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: rgba(10,10,10,0.6);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--charcoal);
+            border-top: 1px solid var(--steel);
+            padding: 3rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-brand {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 0.2em;
+            color: var(--gold);
+        }
+        .footer-text {
+            font-size: 0.75rem;
+            color: var(--ash);
+            letter-spacing: 0.05em;
+        }
+        .footer-text a { color: var(--gold); text-decoration: none; }
+        .footer-text a:hover { text-decoration: underline; }
+
+        /* ── FADE IN ANIMATION ── */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            .navbar { padding: 1rem 1.5rem; }
+            section, #gym-section, #video-section, #graph-section { padding: 5rem 1.5rem; }
+            .points-grid { grid-template-columns: 1fr; }
+            #gym-section { grid-template-columns: 1fr; gap: 3rem; }
+            .quote-banner { padding: 4rem 1.5rem; }
+            footer { flex-direction: column; gap: 1rem; text-align: center; }
+            #top { padding: 0 1.5rem 5rem; }
+            .scroll-indicator { display: none; }
+            .video-wrap { padding-bottom: 56%; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a class="navbar-brand" href="index.html">Brady Copeland</a>
+        <ul class="nav-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="blank.html">Weight Lifting</a></li>
+            <li><a href="game.html">Game Page</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <header id="top">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Weight<br><span>Lifting</span></h1>
+            <p class="hero-sub">The gym has shaped who I am in more ways than one! It has taught me discipline, built my work ethic, and improved my life in ways I never expected. Through this website, I want to share the benefits of fitness and the real ways it has made a difference in my life and the lives of others.</p>
+            <div class="anchor-links">
+                <a href="#point1-section">Key Points</a>
+                <a href="#gym-section">The Gym</a>
+                <a href="#video-section">Watch</a>
+                <a href="#graph-section">Research</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-line"></div>
+            <span>Scroll</span>
+        </div>
+    </header>
+
+    <!-- KEY POINTS -->
+    <section id="point1-section">
+        <p class="section-eyebrow fade-up">The Foundation</p>
+        <h2 class="section-title fade-up">The Benefits of <em>Weightlifting</em></h2>
+        <div class="points-grid">
+            <div class="point-card fade-up" id="point1">
+                <div class="point-number">01</div>
+                <h3 class="point-title">Strength &amp; Power</h3>
+                <ul class="point-list">
+                    <li>Increases Strength and Physical Power</li>
+                    <li>Enhances Athletic Performance</li>
+                </ul>
+            </div>
+            <div class="point-card fade-up" id="point2">
+                <div class="point-number">02</div>
+                <h3 class="point-title">Physical Health</h3>
+                <ul class="point-list">
+                    <li>Improves Body Composition</li>
+                    <li>Improves Bone Density</li>
+                </ul>
+            </div>
+            <div class="point-card fade-up" id="point3">
+                <div class="point-number">03</div>
+                <h3 class="point-title">Mental Health</h3>
+                <ul class="point-list">
+                    <li>Increases Confidence and Self-Worth</li>
+                    <li>Reduces Stress and Anxiety</li>
+                </ul>
+            </div>
+            <div class="point-card fade-up" id="point4">
+                <div class="point-number">04</div>
+                <h3 class="point-title">Recovery &amp; Growth</h3>
+                <ul class="point-list">
+                    <li>Increases and Improves Sleep</li>
+                    <li>Pushes You to Grow Physically and Mentally</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUOTE BANNER -->
+    <div class="quote-banner">
+        <blockquote>"The only person you should try to be better than is the person you were yesterday."</blockquote>
+        <cite>— Anonymous</cite>
+    </div>
+
+    <!-- IMAGE SECTION -->
+    <div id="gym-section">
+        <div class="gym-text fade-up">
+            <p class="section-eyebrow">THE ENVIRONMENT</p>
+            <h2 class="section-title">What You Can Do <em>At The Gym</em></h2>
+            <p>The gym is a versatile space that can be tailored to whatever your body needs. Whether you're focused on active recovery and mobility work, building muscle through heavier loads at lower rep ranges, or chasing pure strength in the discipline of powerlifting, there's a path for you. Some athletes dedicate their training to mastering specific movements, such as the deadlift or squat, while others prefer the simplicity and control of bodyweight training and calisthenics. At its core, the gym is whatever you make it.</p>
+        </div>
+        <div class="gym-image-wrap fade-up">
+            <img src="../assets/img/GYM.jpg" alt="The Gym">
+        </div>
+    </div>
+
+    <!-- VIDEO SECTION -->
+    <div id="video-section">
+        <div class="inner">
+            <p class="section-eyebrow fade-up">Inspiration</p>
+            <h2 class="section-title fade-up">Watch <em>Greatness</em> in Action</h2>
+            <p class="fade-up" style="color:var(--ash);max-width:600px;line-height:1.8;margin-top:1rem;">Ronnie Coleman is widely considered the greatest bodybuilder of all time. Having won eight consecutive Mr. Olympia titles. He has been an inspiration to me and thousands of others.</p>
+            <div class="video-wrap fade-up">
+                <iframe src="https://www.youtube.com/embed/8BNP126zgPU" title="Ronnie Coleman Working Out"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- GRAPH SECTION -->
+    <div id="graph-section">
+        <p class="section-eyebrow fade-up">The Science</p>
+        <h2 class="section-title fade-up">Exercise &amp; <em>Disease Prevention</em></h2>
+        <p class="fade-up" style="color:var(--ash);max-width:600px;line-height:1.8;margin-top:1rem;">Regular exercise is one of the most powerful tools for long-term health. It dramatically reduces the risk of chronic disease and certain cancers, while also delivering profound benefits that go far beyond appearance. Lifting weights, in particular, strengthens not just your muscles but also your bones, your metabolism, and your cardiovascular system, improving your health from the inside out.</p>
+        <div class="graph-wrap fade-up">
+            <div class='tableauPlaceholder' id='viz1776147485042' style='position: relative'>
+                <noscript>
+                    <a href='#'>
+                        <img alt='Benefits of Exercise in Combating Disease and Cancer'
+                            src='https://public.tableau.com/static/images/be/benefitsofexercise/Sheet1/1_rss.png'
+                            style='border: none' />
+                    </a>
+                </noscript>
+                <object class='tableauViz' style='display:none;'>
+                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                    <param name='embed_code_version' value='3' />
+                    <param name='site_root' value='' />
+                    <param name='name' value='benefitsofexercise/Sheet1' />
+                    <param name='tabs' value='no' />
+                    <param name='toolbar' value='yes' />
+                    <param name='static_image' value='https://public.tableau.com/static/images/be/benefitsofexercise/Sheet1/1.png' />
+                    <param name='animate_transition' value='yes' />
+                    <param name='display_static_image' value='yes' />
+                    <param name='display_spinner' value='yes' />
+                    <param name='display_overlay' value='yes' />
+                    <param name='display_count' value='yes' />
+                    <param name='language' value='en-US' />
+                </object>
+            </div>
+            <script type='text/javascript'>
+                var divElement = document.getElementById('viz1776147485042');
+                var vizElement = divElement.getElementsByTagName('object')[0];
+                vizElement.style.width = '100%';
+                vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
+                var scriptElement = document.createElement('script');
+                scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+                vizElement.parentNode.insertBefore(scriptElement, vizElement);
+            </script>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-brand">Brady Copeland</div>
+        <p class="footer-text">© 2026 Weight Lifting Page &nbsp;|&nbsp; <a href="#top">Back to Top ↑</a></p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script>
+        const fadeEls = document.querySelectorAll('.fade-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), i * 80);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        fadeEls.forEach(el => observer.observe(el));
+
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            navbar.style.background = window.scrollY > 50
+                ? 'rgba(10,10,10,0.97)'
+                : 'rgba(10,10,10,0.85)';
+        });
+    </script>
+</body>
+</html>

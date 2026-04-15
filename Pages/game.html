@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>Brady Copeland - Games</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+        <link href="../css/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="index.html"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="../index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="game.html">Game Page</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <header class="masthead" style="background-image: url('../assets/img/bird.jpg')">
+
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Flappy Bird</h1>
+                            <span class="subheading">This is my Favorite Game</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7 text-center">
+                    <h2>Flappy Bird</h2>
+                    <p>Press Space or tap to flap!</p>
+                    <canvas id="gameCanvas" width="400" height="500" style="display:block;margin:0 auto;border:2px solid #333;background:#70c5ce;"></canvas>
+                </div>
+            </div>
+        </div>
+        <footer class="border-top">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="small text-center text-muted fst-italic">Copyright &copy; Brady Copeland 2024</div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="js/scripts.js"></script>
+        <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        let bird = {x:80,y:200,vy:0,gravity:0.25,jump:-5.5,width:34,height:24};
+        let pipes = [];
+        let score = 0;
+        let best = 0;
+        let frame = 0;
+        let state = 'waiting';
+        let groundY = 460;
+        function newPipe() {
+            let gap=150,minH=60,maxH=groundY-gap-minH;
+            let topH=Math.floor(Math.random()*(maxH-minH+1))+minH;
+            pipes.push({x:400,topH,gap,scored:false});
+        }
+        function reset() {
+            bird={x:80,y:200,vy:0,gravity:0.25,jump:-5.5,width:34,height:24};
+            pipes=[];score=0;frame=0;state='playing';newPipe();
+        }
+        function flap() {
+            if(state==='waiting'){reset();return;}
+            if(state==='dead'){reset();return;}
+            bird.vy=bird.jump;
+        }
+        document.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();flap();}});
+        canvas.addEventListener('click',flap);
+        canvas.addEventListener('touchstart',e=>{e.preventDefault();flap();});
+        function drawBird() {
+            ctx.save();
+            ctx.translate(bird.x+bird.width/2,bird.y+bird.height/2);
+            let tilt=Math.min(Math.max(bird.vy*3,-30),90);
+            ctx.rotate(tilt*Math.PI/180);
+            ctx.fillStyle='#f5d021';
+            ctx.beginPath();ctx.ellipse(0,0,bird.width/2,bird.height/2,0,0,Math.PI*2);ctx.fill();
+            ctx.fillStyle='#f0a500';
+            ctx.beginPath();ctx.ellipse(4,4,bird.width/2-4,bird.height/2-4,0,0,Math.PI*2);ctx.fill();
+            ctx.fillStyle='white';ctx.beginPath();ctx.arc(8,-6,7,0,Math.PI*2);ctx.fill();
+            ctx.fillStyle='#333';ctx.beginPath();ctx.arc(10,-6,3.5,0,Math.PI*2);ctx.fill();
+            ctx.fillStyle='#ff6b35';ctx.beginPath();
+            ctx.moveTo(bird.width/2-4,0);ctx.lineTo(bird.width/2+6,3);ctx.lineTo(bird.width/2-4,6);ctx.fill();
+            ctx.restore();
+        }
+        function drawPipes() {
+            pipes.forEach(p=>{
+                ctx.fillStyle='#5ea832';ctx.fillRect(p.x,0,52,p.topH);
+                ctx.fillStyle='#73c73a';ctx.fillRect(p.x+3,0,10,p.topH);
+                ctx.fillStyle='#3d7a1f';ctx.fillRect(p.x-4,p.topH-20,60,20);
+                let botY=p.topH+p.gap;
+                ctx.fillStyle='#5ea832';ctx.fillRect(p.x,botY,52,groundY-botY);
+                ctx.fillStyle='#73c73a';ctx.fillRect(p.x+3,botY,10,groundY-botY);
+                ctx.fillStyle='#3d7a1f';ctx.fillRect(p.x-4,botY,60,20);
+            });
+        }
+        function drawGround() {
+            ctx.fillStyle='#ded895';ctx.fillRect(0,groundY,400,canvas.height-groundY);
+            ctx.fillStyle='#c6b550';ctx.fillRect(0,groundY,400,8);
+        }
+        function drawScore() {
+            ctx.fillStyle='white';ctx.strokeStyle='#333';ctx.lineWidth=3;
+            ctx.font='bold 36px sans-serif';ctx.textAlign='center';
+            ctx.strokeText(score,200,60);ctx.fillText(score,200,60);
+        }
+        function drawWaiting() {
+            ctx.fillStyle='rgba(0,0,0,0.35)';ctx.fillRect(60,160,280,100);
+            ctx.fillStyle='white';ctx.font='bold 28px sans-serif';ctx.textAlign='center';
+            ctx.fillText('Flappy Bird',200,200);ctx.font='16px sans-serif';
+            ctx.fillText('Tap or press Space to start',200,235);
+        }
+        function drawDead() {
+            ctx.fillStyle='rgba(0,0,0,0.45)';ctx.fillRect(60,140,280,160);
+            ctx.fillStyle='white';ctx.font='bold 28px sans-serif';ctx.textAlign='center';
+            ctx.fillText('Game Over',200,180);ctx.font='18px sans-serif';
+            ctx.fillText('Score: '+score,200,215);ctx.fillText('Best: '+best,200,240);
+            ctx.font='15px sans-serif';ctx.fillStyle='#ffd700';ctx.fillText('Tap to play again',200,280);
+        }
+        function checkCollision() {
+            let bx=bird.x+4,by=bird.y+4,bw=bird.width-8,bh=bird.height-8;
+            if(by+bh>=groundY)return true;if(by<=0)return true;
+            for(let p of pipes){
+                if(bx+bw>p.x+4&&bx<p.x+48){if(by<p.topH||by+bh>p.topH+p.gap)return true;}
+            }
+            return false;
+        }
+        function loop() {
+            ctx.clearRect(0,0,400,canvas.height);
+            ctx.fillStyle='#70c5ce';ctx.fillRect(0,0,400,canvas.height);
+            ctx.fillStyle='#c9eaf0';
+            [[50,80,120,40],[160,60,90,35],[280,90,110,38],[340,70,80,30]].forEach(([x,y,w,h])=>{
+                ctx.beginPath();ctx.ellipse(x,y,w/2,h/2,0,0,Math.PI*2);ctx.fill();
+            });
+            if(state==='playing'){
+                frame++;bird.vy+=bird.gravity;bird.y+=bird.vy;
+                if(frame%90===0)newPipe();
+                pipes.forEach(p=>p.x-=2);
+                pipes=pipes.filter(p=>p.x>-60);
+                pipes.forEach(p=>{if(!p.scored&&p.x+52<bird.x){p.scored=true;score++;if(score>best)best=score;}});
+                if(checkCollision())state='dead';
+            }
+            drawPipes();drawGround();drawBird();
+            if(state==='playing')drawScore();
+            if(state==='waiting'){drawScore();drawWaiting();}
+            if(state==='dead'){drawScore();drawDead();}
+            requestAnimationFrame(loop);
+        }
+        loop();
+        </script>
+    </body>
+</html>

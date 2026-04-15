@@ -1,0 +1,209 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f2f2f2;
+    font-family: 'Lora', Georgia, serif;
+    color: #222;
+    line-height: 1.8;
+    text-align: center;
+}
+
+/* ── Top gold accent bar ── */
+body::before {
+    content: '';
+    display: block;
+    background-color: #c0a040;
+    height: 6px;
+    width: 100%;
+}
+
+/* ── Header ── */
+header {
+    background-color: #1e2d45;
+    padding: 60px 40px 40px;
+    text-align: center;
+    border-bottom: 4px solid #c0a040;
+}
+
+h1 {
+    color: #ffffff;
+    font-size: 52px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    display: inline-block;
+    background-color: #c0a040;
+    padding: 14px 44px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+}
+
+.subtitle {
+    color: #d4d4d4;
+    font-size: 18px;
+    font-style: italic;
+    font-family: 'Lora', serif;
+    margin: 10px 0 24px;
+}
+
+/* ── Anchor links in header ── */
+.anchor-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.anchor-links a {
+    color: #ffffff;
+    background-color: rgba(192, 160, 64, 0.3);
+    border: 1px solid #c0a040;
+    padding: 6px 18px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.anchor-links a:hover {
+    background-color: #c0a040;
+    color: #ffffff;
+}
+
+/* ── Section headings ── */
+h2 {
+    color: #c0a040;
+    font-size: 24px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(192, 160, 64, 0.3);
+    padding-bottom: 10px;
+}
+
+.section-desc {
+    color: #aaaaaa;
+    font-size: 15px;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+/* ── Lists ── */
+ol {
+    margin: 10px auto;
+    max-width: 580px;
+    text-align: left;
+    display: inline-block;
+    list-style-position: inside;
+}
+
+ol li {
+    color: #ffffff;
+    font-size: 17px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    margin: 12px 0 4px;
+    letter-spacing: 0.5px;
+    text-align: left;
+}
+
+ul {
+    margin-left: 0;
+    padding-left: 20px;
+    text-align: left;
+    list-style-position: outside;
+}
+
+ul li {
+    color: #c0a040;
+    font-size: 15px;
+    font-family: 'Lora', serif;
+    font-weight: 400;
+    margin: 4px 0;
+    text-align: left;
+}
+
+/* ── Image ── */
+img {
+    border: 3px solid #c0a040;
+    border-radius: 8px;
+    margin: 10px auto;
+    max-width: 100%;
+    display: block;
+}
+
+/* ── iFrame ── */
+iframe {
+    border: 3px solid #c0a040;
+    border-radius: 8px;
+    margin: 10px auto;
+    display: block;
+    max-width: 100%;
+}
+
+/* ── General links ── */
+a {
+    color: #c0a040;
+    text-decoration: none;
+    font-family: 'Open Sans', sans-serif;
+}
+
+a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* ── Shared div styles ── */
+.list-section,
+.image-section,
+.video-section,
+.graph-section {
+    background-color: #1e2d45;
+    padding: 40px;
+    margin: 30px auto;
+    border-radius: 10px;
+    border: 1px solid #c0a040;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.list-section  { max-width: 700px; }
+.image-section { max-width: 700px; }
+.video-section { max-width: 700px; }
+.graph-section { max-width: 960px; margin-bottom: 60px; }
+
+/* ── Footer ── */
+footer {
+    background-color: #1e2d45;
+    border-top: 4px solid #c0a040;
+    padding: 24px;
+    margin-top: 40px;
+}
+
+.footer-text {
+    color: #aaaaaa;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    margin: 0;
+}
+
+.footer-text a {
+    color: #c0a040;
+    font-size: 14px;
+}
+
+.footer-text a:hover {
+    color: #ffffff;
+}
